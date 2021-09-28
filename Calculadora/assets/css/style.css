@@ -88,3 +88,7 @@ form button:hover {
 .btn:hover {
     background: #9e9e9e;
 }
+
+.btn:active {
+    background: #333333;
+}
