@@ -1,3 +1,5 @@
+/*
+Calculadora numa Factory Function
 function criaCalculadora() {
     return {
         display: document.querySelector('.display'),
@@ -72,3 +74,56 @@ function criaCalculadora() {
 
 const calculadora = criaCalculadora();
 calculadora.init()
+*/
+
+//Calculadora em Constructor function:
+
+function Calculadora () {
+    this.display = document.querySelector('.display');
+
+    this.inicia = () => {
+        this.capturaCliques();
+    }
+
+    this.capturaCliques = () => {
+        document.addEventListener('click', e => {
+            const el = e.target;
+            if(el.classList.contains('btn-num')) this.addNumDisplay(el);
+            if(el.classList.contains('btn-clear')) this.clear();
+            if(el.classList.contains('btn-del')) this.del();
+            if(el.classList.contains('btn-eq')) this.equal();
+        })
+    }
+
+    this.addNumDisplay = (el) => {
+        this.display.value += el.innerText;
+        this.display.focus();
+    }
+
+    this.clear = () => {
+        this.display.value = '';
+    }
+
+    this.del = () => {
+        this.display.value = this.display.value.slice(0, -1);
+    }
+
+    this.equal = () => {
+        try {
+            const conta = eval(this.display.value);
+
+            if(!conta) {
+                alert('Operação inválida!');
+                return;
+            }
+
+            this.display.value = conta;
+        } catch {
+            alert('Operação Inválida!');
+            return;
+        }
+    }
+}
+
+const calculadora = new Calculadora();
+calculadora.inicia()
